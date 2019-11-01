@@ -101,4 +101,4 @@ $(TARGET).out: $(OBJS)
 # claen all the generated files
 .PHONY: clean
 clean:
-	rm -f $(TARGET).out $(TARGET).map *.asm *.i *.o *.dump
+	rm -f $(TARGET).out $(TARGET).map ./src/*.asm ./src/*.i ./src/*.o ./src/*.dump
