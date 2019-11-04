@@ -58,34 +58,38 @@ else
 	CFLAGS = -DHOST -Wall -Werror -g -O0 -std=c99
 	LDFLAGS = -Wl,-Map=$(TARGET).map
 endif
-#LD = 
+#LD =
+
+ifeq ($(COURSE), 1)
+	COURSEFLAG = -DCOURSE1
+endif
 
 CPPFLAGS := $(INCLUDES)
 OBJS = $(SOURCES:.c=.o)
 
 # Generate preprocessed file
 %.i : %.c
-	$(CC) -E $< $(CFLAGS) $(CPPFLAGS) -o $@
+	$(CC) -E $< $(CFLAGS) $(COURSEFLAG) $(CPPFLAGS) -o $@
 
 
 # Generate assembly file
 # Using the -S command
 %.asm : %.c
-	$(CC) -S $< $(CFLAGS) $(CPPFLAGS) -o $@
+	$(CC) -S $< $(CFLAGS) $(COURSEFLAG) $(CPPFLAGS) -o $@
 
 # Using the objdump utility	
-	$(CC) -c $< $(CFLAGS) $(LDFLAGS) $(CPPFLAGS)
+	$(CC) -c $< $(CFLAGS) $(COURSEFLAG) $(LDFLAGS) $(CPPFLAGS)
 	arm-none-eabi-objdump --disassemble $*.o > $*.dump
 
 # Generate the object file
 %.o : %.c
-	$(CC) -c $< $(CFLAGS) $(CPPFLAGS) -o $@
+	$(CC) -c $< $(CFLAGS) $(COURSEFLAG) $(CPPFLAGS) -o $@
 
 
 # Generate all the objects files
 .PHONY: compile-all
 compile-all:
-	$(CC) -c $(SOURCES) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS)
+	$(CC) -c $(SOURCES) $(CFLAGS) $(COURSEFLAG) $(LDFLAGS) $(CPPFLAGS)
 
 
 # Generate final executable
@@ -96,7 +100,7 @@ build: all
 all: $(TARGET).out
 
 $(TARGET).out: $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -o $@
+	$(CC) $(OBJS) $(CFLAGS) $(COURSEFLAG) $(LDFLAGS) $(CPPFLAGS) -o $@
 
 # claen all the generated files
 .PHONY: clean

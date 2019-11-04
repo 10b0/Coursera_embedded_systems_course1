@@ -21,6 +21,7 @@
 #ifndef __STATS_H__
 #define __STATS_H__
 
+int statistics();
 
 /**
  * @brief Print the statistics in the terminal
