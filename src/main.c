@@ -24,6 +24,7 @@
 #include "memory.h"
 #include "course1.h"
 #include "data.h"
+#include "stats.h"
 
 #define MAX_LENGTH (10)
 char buffer[MAX_LENGTH];
@@ -35,6 +36,8 @@ int main(void) {
   #else
     unsigned int i;
     char value;
+
+    statistics();
 
     /* Code below does some arbitrary memory Reads & writes */
     clear_all(buffer, MAX_LENGTH);

@@ -21,6 +21,7 @@
  *
  */
 #include <stdint.h>
+#include <stdlib.h>
 #include "memory.h"
 
 /***********************************************************
@@ -50,31 +51,72 @@ void clear_all(char * ptr, unsigned int size){
 }
 
 
+/* ------------------------------------------------------ */
+/* Start the functions for the course 1 (last assessment) */
+/* ------------------------------------------------------ */
+
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length) {
-	return src;
+	/* new pointer and copy the original to make for not lose the values when overlap */
+	uint8_t * aux = (uint8_t*) reserve_words(length);
+	my_memcopy(src, aux, length);
+
+	int i;
+	for(i = 0; i < length; i++) {
+		*dst = *(aux + i); /* copy the value to the destination pointer */
+		dst++;
+	}
+	free_words((uint32_t*) aux); /* free the new pointer */
+	return dst;
 }
 
 uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length) {
-	return src;
+	int i;
+	for(i = 0; i < length; i++) {
+		*(dst + i) = *(src + i);  /* copy the value to the destination pointer */
+	}
+	return dst;
 }
 
 uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value) {
+	int i;
+	for(i = 0; i < length; i++) {
+		*src = value;  /* set to the new value */
+		src++;
+	}
 	return src;
 }
 
 uint8_t * my_memzero(uint8_t * src, size_t length) {
+	int i;
+	for(i = 0; i < length; i++) {
+		*src = 0; /* set to 0 */
+		src++;
+	}	
 	return src;
 }
 
 uint8_t * my_reverse(uint8_t * src, size_t length) {
+	/* new pointer and copy the original to make que changes */
+	uint8_t * aux = (uint8_t*) reserve_words(length);
+    my_memcopy(src, aux, length);
+
+	int i;
+	for(i = length - 1; i >= 0; i--) {
+		*src = *(aux + i);
+		src++;
+	}
+    free_words((uint32_t*) aux);  /* free the new pointer */
 	return src;
 }
 
-int32_t * reserve_words(size_t length) {
-	return (int32_t *)length;
+uint32_t * reserve_words(size_t length) {
+	uint32_t * ptr = malloc(sizeof(uint32_t) * length);
+	return ptr;
 }
 
-void free_words(int32_t * src) {
-
+void free_words(uint32_t * src) {
+	if(src) {
+		free(src);
+	}
 }
 

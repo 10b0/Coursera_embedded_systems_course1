@@ -23,6 +23,7 @@
 #include "memory.h"
 #include "data.h"
 #include "stats.h"
+#include "data.c"
 
 int8_t test_data1() {
   uint8_t * ptr;
@@ -37,16 +38,14 @@ int8_t test_data1() {
   {
     return TEST_ERROR;
   }
-value = 0;
- // digits = my_itoa( num, ptr, BASE_16);   
- // value = my_atoi( ptr, digits, BASE_16);
-  digits = 0;
-  digits++;
+
+  digits = my_itoa( num, ptr, BASE_16);   
+  value = my_atoi( ptr, digits, BASE_16);
   #ifdef VERBOSE
   PRINTF("  Initial number: %d\n", num);
   PRINTF("  Final Decimal number: %d\n", value);
   #endif
-  //free_words( (uint32_t*)ptr );
+  free_words( (uint32_t*)ptr );
 
   if ( value != num )
   {
@@ -69,16 +68,13 @@ int8_t test_data2() {
     return TEST_ERROR;
   }
 
-  //digits = my_itoa( num, ptr, BASE_10);
-  //value = my_atoi( ptr, digits, BASE_10);
-  value = 0;
-  digits = 0;
-  digits++;
+  digits = my_itoa( num, ptr, BASE_10);
+  value = my_atoi( ptr, digits, BASE_10);
   #ifdef VERBOSE
   PRINTF("  Initial Decimal number: %d\n", num);
   PRINTF("  Final Decimal number: %d\n", value);
   #endif
-  //free_words( (uint32_t*)ptr );
+  free_words( (uint32_t*)ptr );
 
   if ( value != num )
   {
@@ -123,7 +119,7 @@ int8_t test_memmove1() {
     }
   }
 
-  //free_words( (uint32_t*)set );
+  free_words( (uint32_t*)set );
   return ret;
 }
 
@@ -161,7 +157,7 @@ int8_t test_memmove2() {
     }
   }
 
-  //free_words( (uint32_t*)set );
+  free_words( (uint32_t*)set );
   return ret;
 }
 
@@ -201,7 +197,7 @@ int8_t test_memmove3() {
   }
 
 
-  //free_words( (uint32_t*)set );
+  free_words( (uint32_t*)set );
   return ret;
 
 }
@@ -240,7 +236,7 @@ int8_t test_memcopy() {
     }
   }
 
-  //free_words( (uint32_t*)set );
+  free_words( (uint32_t*)set );
   return ret;
 }
 
@@ -286,7 +282,7 @@ int8_t test_memset()
     }
   }
   
-  //free_words( (uint32_t*)set );
+  free_words( (uint32_t*)set );
   return ret;
 }
 
@@ -322,7 +318,7 @@ int8_t test_reverse()
     }
   }
 
-  //free_words( (uint32_t*)copy );
+  free_words( (uint32_t*)copy );
   return ret;
 }
 

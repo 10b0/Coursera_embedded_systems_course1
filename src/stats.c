@@ -23,6 +23,7 @@
 
 
 #include <stdio.h>
+#include "platform.h"
 #include "stats.h"
 
 /* Size of the Data Set */
@@ -44,31 +45,33 @@ int statistics() {
 
 /* Add other Implementation File Code Here */
 void print_statistics(unsigned char array[], unsigned int length) {
-
-	printf("\n-------------- Print Array -----------------\n");
+	
 	print_array(array, length);
-    printf("\n-------------- Print Sort Array -----------------\n");
 	sort_array(array, length);
 
-	printf("\n-----------------Statistics:-------------------\n");
-	printf(" - Median: %d\n", find_median(array, length));
-	printf(" - Mean: %d\n", find_mean(array, length));
-	printf(" - Maximum: %d\n", find_maximum(array, length));
-	printf(" - Minimum: %d\n", find_minimum(array, length));
-	printf("\n------------------------------------------------\n");
+	PRINTF("\n-----------------Statistics:-------------------\n");
+	PRINTF(" - Median: %d\n", find_median(array, length));
+	PRINTF(" - Mean: %d\n", find_mean(array, length));
+	PRINTF(" - Maximum: %d\n", find_maximum(array, length));
+	PRINTF(" - Minimum: %d\n", find_minimum(array, length));
+	PRINTF("\n------------------------------------------------\n");
 }
 
 void print_array(unsigned char array[], unsigned int length) {
+#ifdef VERBOSE
+	PRINTF("\n-------------- Print Array -----------------\n");
 	int i;
 	int count = 0;
 	for(i = 0; i < length; i++) {
-		printf("A[%d]: %d \t", i, array[i]);
+		PRINTF("A[%d]: %d \t", i, array[i]);
 		count++;
 		if(count > 4) {
-			printf("\n");
+			PRINTF("\n");
 			count = 0;
 		}
 	}
+	PRINTF("\n\n");
+#endif
 }
 
 int find_median(unsigned char array[], unsigned int length) {
